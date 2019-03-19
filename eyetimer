@@ -1,0 +1,24 @@
+#!/bin/bash
+START=`date +%s`;
+MINS=0;
+SECS=0;
+HOURS=0;
+
+while [[ 1 ]]; do
+    NOW=`date +%s`;
+    DT=$[$NOW-$START ];
+    SECS=$[$DT % 60];
+    TOTAL_MINS=$[$DT / 60];
+    MINS=$[TOTAL_MINS % 60];
+    if [ $MINS -eq 20 ] && [ $SECS -eq 0 ]; then
+        osascript -e 'display notification "Take 20 second break - look 20 feet away." with title "Take break"'
+        say -v Daniel "look up"
+    fi
+    if [ $MINS -eq 20 ] && [ $SECS -eq 20 ]; then
+        osascript -e 'display notification "Great job taking care of your eyes! Now go be your possiblity." with title "Good Job"'    
+        say -v Daniel "good job"
+        START=`date +%s`;
+    fi
+    sleep .3;
+done
+

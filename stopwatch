@@ -1,0 +1,22 @@
+#!/bin/bash
+START=`date +%s`;
+PAST_MIN=${1:-0};
+PAST_SEC=${2:-0};
+MINS=0;
+SECS=0;
+HOURS=0;
+
+while [[ 1 ]]; do
+    NOW=`date +%s`;
+    DT=$[$NOW-$START + $PAST_SEC + $PAST_MIN * 60 ];
+    SECS=$[$DT % 60];
+    TOTAL_MINS=$[$DT / 60];
+    MINS=$[TOTAL_MINS % 60];
+    HOURS=$[TOTAL_MINS / 60];
+    if [ $HOURS -gt 0 ]; then
+        printf "\r%02d:%02d:%02d\t" $HOURS $MINS $SECS
+    else 
+        printf "\r%02d:%02d\t" $MINS $SECS
+    fi
+    sleep .5;
+done

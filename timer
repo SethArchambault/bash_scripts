@@ -1,0 +1,20 @@
+#!/bin/bash
+MINS=${1:-15};
+INTERVAL=${2:-5};
+SAY=${3:-Done};
+printf "\nStarting ($MINS Minutes with $INTERVAL Minute Reminders)\n"
+date
+while [[ 0 -ne $MINS ]]; do
+    printf "\r %4d\t" $MINS
+    rem=$(( $MINS % $INTERVAL ))
+    if [ $rem -eq 0 ]; then
+        say -v Daniel "$MINS Minutes Left"
+    fi
+    sleep 60
+    MINS=$[$MINS-1]
+done
+say -v Daniel "$SAY"
+osascript -e 'display notification "Done!" with title "Done"'
+printf "\nDone ($1 Minutes) - "
+date
+sleep 1;
